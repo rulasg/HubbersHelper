@@ -1,7 +1,8 @@
 function Get-Hubber{
     [CmdletBinding()]
     param (
-        [Parameter(Position=0)][string]$Handle
+        [Parameter(Position=0)][string]$Handle,
+        [Parameter()][switch]$AsHashtable
     )
 
     $hubbers = Get-Content -Path "~/hubbers.json" | ConvertFrom-Json -Depth 10 -AsHashtable
@@ -10,7 +11,11 @@ function Get-Hubber{
         return [pscustomobject] $hubbers.$Handle
     }
 
-    return $hubbers.Values
+    if($AsHashtable){
+        return $hubbers
+    } else {
+        return $hubbers.Values
+    }
 } Export-ModuleMember -Function Get-Hubber
 
 function Get-HubberByCountry {
