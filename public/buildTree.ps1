@@ -39,6 +39,7 @@ function Build-Node {
         ## Manager
         # Set to null the manager for the CEO where manager == him self
         $node.manager = ($node.manager -ne $nlogin) ? $hubbers.$($node.manager) : $null
+        $node.level = $node.manager ? $node.manager.level + 1 : 0
 
         ## Employees
 
