@@ -1,17 +1,39 @@
+
+function Load-HubbersList {
+    [cmdletbinding()]
+    param (
+        #path to hubber list
+        [Parameter(Mandatory, Position = 1)][string]$Path
+    )
+
+    try{
+        $hubbersRawList = Get-Content $Path -Raw | ConvertFrom-Json -AsHashtable
+    } catch {
+        Write-Error -Message "Failed to read or parse JSON file: $_"
+        return $null
+    }
+
+    # Calculate the tree
+    $result = Build-HubbersTree -Hubbers $hubbersRawList
+
+    # Save to local cache
+    Save-HubbersListDb -Hubbers $result.HubbersList
+    Save-HubbersTreeDb -Hubbers $result.HubbersTree
+
+    return $result
+
+} Export-ModuleMember -Function Load-HubbersList
+
+
 function Build-HubbersTree {
     [cmdletbinding()]
     param (
-
+        [Parameter(mandatory)][hashtable]$Hubbers
     )
-
-    $hubbers = Get-Hubber -AsHashtable
 
     $ceo = $hubbers.Values | Where-Object { $_.manager -eq $_.github_login }
 
     $tree = Build-Node $hubbers $ceo
-
-    Save-HubbersListDb -Hubbers $hubbers
-    Save-HubbersTreeDb -Hubbers $tree
 
     $global:ResultHubbersBuild = @{
         totalHubbers = $hubbers.count
@@ -21,7 +43,7 @@ function Build-HubbersTree {
 
     return $global:ResultHubbersBuild
 
-} Export-ModuleMember -Function Build-HubbersTree
+}
 
 
 function Build-Node {
