@@ -1,21 +1,49 @@
-function Build-Tree {
+
+function Import-HubbersList {
     [cmdletbinding()]
     param (
-
+        #path to hubber list
+        [Parameter(Mandatory, Position = 1)][string]$Path
     )
 
-    $hubbers = Get-Hubber -AsHashtable
+    try{
+        $hubbersRawList = Get-Content $Path -Raw | ConvertFrom-Json -AsHashtable
+    } catch {
+        Write-Error -Message "Failed to read or parse JSON file: $_"
+        return $null
+    }
+
+    # Calculate the tree
+    $result = Build-HubbersTree -Hubbers $hubbersRawList
+
+    # Save to local cache
+    Save-HubbersListDb -Hubbers $result.HubbersList
+    Save-HubbersTreeDb -Hubbers $result.HubbersTree
+
+    return $result
+
+} Export-ModuleMember -Function Import-HubbersList
+
+
+function Build-HubbersTree {
+    [cmdletbinding()]
+    param (
+        [Parameter(mandatory)][hashtable]$Hubbers
+    )
 
     $ceo = $hubbers.Values | Where-Object { $_.manager -eq $_.github_login }
 
     $tree = Build-Node $hubbers $ceo
 
-    $global:hubbers = $hubbers
-    $global:tree = $tree
+    $global:ResultHubbersBuild = @{
+        totalHubbers = $hubbers.count
+        "HubbersList" = $hubbers
+        "HubbersTree" = $tree
+    }
 
-    return $hubbers, $tree
+    return $global:ResultHubbersBuild
 
-} Export-ModuleMember -Function Build-Tree
+}
 
 
 function Build-Node {
@@ -26,7 +54,9 @@ function Build-Node {
 
     try {
 
-        Write-Host "." -NoNewline
+        if ($null -eq $script:count -or ($script:count % 10) -eq 0) {
+            Write-Host "." -NoNewline
+        }
 
         # Stop after X nodes
         if (! (Test-Continue)) {
@@ -38,21 +68,22 @@ function Build-Node {
 
         ## Manager
         # Set to null the manager for the CEO where manager == him self
-        $node.manager = ($node.manager -ne $nlogin) ? $hubbers.$($node.manager) : $null
+        $node.manager = ($node.manager -eq $nlogin) ? $null : $hubbers.$($node.manager)
+        $node.level = $node.manager ? $node.manager.level + 1 : 0
 
-        ## Employees
+        ## Reports
 
-        $employeesList = $hubbers.Values | Where-Object { ($_.manager -eq $nlogin) -and ($_.github_login -ne $nlogin) }
+        $reportsList = $hubbers.Values | Where-Object { ($_.manager -eq $nlogin) -and ($_.github_login -ne $nlogin) }
 
-        $Node.totalEmployees = 0
+        $Node.totalReports = 0
 
         # Recurse employ
-        if ($employeesList.count -ne 0) {
+        if ($reportsList.count -ne 0) {
 
-            $Node.employees = @{}
+            $Node.reports = @{}
 
             # recurse call
-            foreach ($employee in $employeesList) {
+            foreach ($employee in $reportsList) {
 
                 $elogin = $employee.github_login
 
@@ -62,15 +93,15 @@ function Build-Node {
                     continue
                 }
 
-                $Node.employees.$elogin = Build-Node $hubbers $employee
+                $Node.reports.$elogin = Build-Node $hubbers $employee
             }
         
-            # Count the number of employees under this node
-            foreach ($employee in $Node.employees.Values) {
-                if ($null -ne $employee.totalEmployees) {
-                    $Node.totalEmployees += $employee.totalEmployees
+            # Count the number of reports under this node
+            foreach ($employee in $Node.reports.Values) {
+                if ($null -ne $employee.totalReports) {
+                    $Node.totalReports += $employee.totalReports
                 }
-                $Node.totalEmployees++
+                $Node.totalReports++
             }
         }
 
