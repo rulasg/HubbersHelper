@@ -138,7 +138,7 @@ function Save-DatabaseKey{
 
     switch ($DbFormat) {
         "JSON" { $Value | ConvertTo-Json -Depth 10 | Set-Content $path -Encoding UTF8 -Force ; Break }
-        "XML"  { $Value | Export-Clixml -Path $path ; Break }
+        "XML"  { $Value | Export-Clixml -Path $path -Force; Break }
         default { throw "Unsupported database format $DbFormat"
         }
     }
