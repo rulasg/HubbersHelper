@@ -168,4 +168,4 @@ function Get-ModuleFolder{
         }
     }
     return $moduleFolder
-}
+} Export-ModuleMember -Function Get-ModuleFolder
