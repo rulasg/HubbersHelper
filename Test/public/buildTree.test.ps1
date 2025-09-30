@@ -5,7 +5,7 @@ function Test_Load_HubbersList{
 
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
 
-    $result = Load-HubbersList -Path $filePath
+    $result = Import-HubbersList -Path $filePath
  
     Assert-AreEqual -Expected user0 -Presented $result.HubbersList.user12.manager.manager.github_login
 
@@ -20,7 +20,7 @@ function Test_GetHubbersList{
 
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
 
-    $result = Load-HubbersList -Path $filePath
+    $result = Import-HubbersList -Path $filePath
 
     $result = Get-HubbersList
 
@@ -33,7 +33,7 @@ function Test_GetHubbersTree{
 
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
 
-    $result = Load-HubbersList -Path $filePath
+    $result = Import-HubbersList -Path $filePath
 
     $result = Get-HubbersTree
 

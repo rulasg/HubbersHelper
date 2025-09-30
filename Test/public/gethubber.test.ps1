@@ -3,7 +3,7 @@ function Test_Gethubber{
     Reset-InvokeCommandMock
     Mock_Database
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
-    $result = Load-HubbersList -Path $filePath
+    $result = Import-HubbersList -Path $filePath
 
     $user = "user3"
     $manager = "user0"
