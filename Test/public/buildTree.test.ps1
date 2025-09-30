@@ -1,11 +1,17 @@
-function Test_Build-Tree{
-    
-    $hubbers,$tree = Build-Tree
+function Test_Build_HubbersTree{
 
-    Assert-AreEqual -Expected ashtom -Presented $hubbers.rulasg.manager.manager.manager.manager.github_login
+    Reset-InvokeCommandMock
+    Mock_Database
+
+    MockCallJson -Command "Invoke-GetHubbers" -Filename "hubbers.json" -AsHashtable
+
+    $result = Build-HubbersTree
+
+    Assert-AreEqual -Expected user0 -Presented $result.HubbersList.user12.manager.manager.github_login
 
     # total employeed
-    Assert-Count -Expected 4410 -Presented $hubbers
-    Assert-AreEqual -Expected 4410 -Presented $tree.totalEmployees
+    Assert-AreEqual -Expected 13 -Presented $result.totalHubbers
+    Assert-AreEqual -Expected 13 -Presented $result.HubbersList.count
 
 }
+

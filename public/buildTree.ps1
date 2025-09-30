@@ -1,4 +1,4 @@
-function Build-Tree {
+function Build-HubbersTree {
     [cmdletbinding()]
     param (
 
@@ -10,12 +10,18 @@ function Build-Tree {
 
     $tree = Build-Node $hubbers $ceo
 
-    $global:hubbers = $hubbers
-    $global:tree = $tree
+    Save-HubbersListDb -Hubbers $hubbers
+    Save-HubbersTreeDb -Hubbers $tree
 
-    return $hubbers, $tree
+    $global:ResultHubbersBuild = @{
+        totalHubbers = $hubbers.count
+        "HubbersList" = $hubbers
+        "HubbersTree" = $tree
+    }
 
-} Export-ModuleMember -Function Build-Tree
+    return $global:ResultHubbersBuild
+
+} Export-ModuleMember -Function Build-HubbersTree
 
 
 function Build-Node {
@@ -26,7 +32,9 @@ function Build-Node {
 
     try {
 
-        Write-Host "." -NoNewline
+        if ($null -eq $script:count -or ($script:count % 10) -eq 0) {
+            Write-Host "." -NoNewline
+        }
 
         # Stop after X nodes
         if (! (Test-Continue)) {
@@ -38,22 +46,22 @@ function Build-Node {
 
         ## Manager
         # Set to null the manager for the CEO where manager == him self
-        $node.manager = ($node.manager -ne $nlogin) ? $hubbers.$($node.manager) : $null
+        $node.manager = ($node.manager -eq $nlogin) ? $null : $hubbers.$($node.manager)
         $node.level = $node.manager ? $node.manager.level + 1 : 0
 
-        ## Employees
+        ## Reports
 
-        $employeesList = $hubbers.Values | Where-Object { ($_.manager -eq $nlogin) -and ($_.github_login -ne $nlogin) }
+        $reportsList = $hubbers.Values | Where-Object { ($_.manager -eq $nlogin) -and ($_.github_login -ne $nlogin) }
 
-        $Node.totalEmployees = 0
+        $Node.totalReports = 0
 
         # Recurse employ
-        if ($employeesList.count -ne 0) {
+        if ($reportsList.count -ne 0) {
 
-            $Node.employees = @{}
+            $Node.reports = @{}
 
             # recurse call
-            foreach ($employee in $employeesList) {
+            foreach ($employee in $reportsList) {
 
                 $elogin = $employee.github_login
 
@@ -63,15 +71,15 @@ function Build-Node {
                     continue
                 }
 
-                $Node.employees.$elogin = Build-Node $hubbers $employee
+                $Node.reports.$elogin = Build-Node $hubbers $employee
             }
         
-            # Count the number of employees under this node
-            foreach ($employee in $Node.employees.Values) {
-                if ($null -ne $employee.totalEmployees) {
-                    $Node.totalEmployees += $employee.totalEmployees
+            # Count the number of reports under this node
+            foreach ($employee in $Node.reports.Values) {
+                if ($null -ne $employee.totalReports) {
+                    $Node.totalReports += $employee.totalReports
                 }
-                $Node.totalEmployees++
+                $Node.totalReports++
             }
         }
 
