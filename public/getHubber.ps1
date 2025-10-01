@@ -2,7 +2,7 @@
 function Get-Hubber{
     [CmdletBinding()]
     param (
-        [Parameter(Position=0)][string]$Handle,
+        [Parameter(ValueFromPipeline,ValueFromPipelineByPropertyName,Position=0)][string]$Handle,
         [Parameter()][switch]$AsHashtable
     )
 
