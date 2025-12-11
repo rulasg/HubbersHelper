@@ -1,0 +1,173 @@
+{
+  "user3": {
+    "manager": "user0",
+    "employment_type": "employee",
+    "github_login": "user3",
+    "msft_alias": "user3MSFT",
+    "name": "Sarah Mitchell",
+    "email": "user3@github.com",
+    "title": "Chief Operating Officer",
+    "cost_center": "Strategic Operations",
+    "country": "United States of America",
+    "state": "Connecticut"
+  },
+  "user1": {
+    "manager": "user0",
+    "employment_type": "employee",
+    "github_login": "user1",
+    "msft_alias": "user1MSFT",
+    "name": "Michael Johnson",
+    "email": "user1@github.com",
+    "title": "Chief Operating Officer",
+    "cost_center": "Strategic Operations",
+    "country": "United States of America",
+    "state": "Connecticut"
+  },
+  "user2": {
+    "manager": "user0",
+    "employment_type": "microsoft_employee",
+    "github_login": "user2",
+    "msft_alias": "user2MSFT",
+    "name": "Jennifer Davis",
+    "email": "user2@github.com",
+    "title": "Chief Revenue Officer",
+    "cost_center": "Office of the CEO",
+    "country": "United States of America",
+    "state": "Maryland"
+  },
+  "user0": {
+    "manager": "user0",
+    "employment_type": "microsoft_employee",
+    "github_login": "user0",
+    "msft_alias": "user0MSFT",
+    "name": "Robert Thompson",
+    "email": "user0@github.com",
+    "title": "CEO",
+    "cost_center": "Office of the CEO",
+    "country": "United States of America\"",
+    "state": "Washington"
+  },
+  "user4": {
+    "manager": "user2",
+    "employment_type": "employee",
+    "github_login": "user4",
+    "msft_alias": "user4MSFT",
+    "name": "Amanda Rodriguez",
+    "email": "user4@github.com",
+    "title": "Chief Product Officer",
+    "cost_center": "Product Management",
+    "country": "United States of America",
+    "state": "North Carolina"
+  },
+  "user5": {
+    "manager": "user1",
+    "employment_type": "microsoft_employee",
+    "github_login": "user5",
+    "msft_alias": "user5MSFT",
+    "name": "David Wilson",
+    "email": "user5@github.com",
+    "title": "VP, Advisor to the CEO",
+    "cost_center": "Office of the CEO",
+    "country": "United States of America"
+  },
+  "user6": {
+    "manager": "user3",
+    "employment_type": "employee",
+    "github_login": "user6",
+    "msft_alias": "user6MSFT",
+    "name": "Lisa Anderson",
+    "email": "user6@github.com",
+    "title": "VP, COS to the CEO",
+    "cost_center": "Office of the CEO",
+    "country": "United States of America",
+    "state": "North Carolina"
+  },
+  "user7": {
+    "manager": "user1",
+    "employment_type": "microsoft_employee",
+    "github_login": "user7",
+    "msft_alias": "user7MSFT",
+    "name": "Christopher Lee",
+    "email": "user7@github.com",
+    "title": "Chief Legal Officer",
+    "cost_center": "Legal",
+    "country": "United States of America"
+  },
+  "user8": {
+    "manager": "user2",
+    "employment_type": "employee",
+    "github_login": "user8",
+    "msft_alias": "user8MSFT",
+    "name": "Michelle Brown",
+    "email": "user8@github.com",
+    "title": "CISO",
+    "cost_center": "Security",
+    "country": "United States of America",
+    "state": "Virginia"
+  },
+  "user9": {
+    "manager": "user3",
+    "employment_type": "microsoft_employee",
+    "github_login": "user9",
+    "name": "Daniel Martinez",
+    "user9MSFT": "jayparikh@github.com",
+    "title": "CFO",
+    "cost_center": "user9 of the CEO",
+    "country": "United States of America"
+  },
+  "user10": {
+    "manager": "user2",
+    "employment_type": "microsoft_employee",
+    "github_login": "user10",
+    "msft_alias": "user10MSFT",
+    "name": "Ashley Taylor",
+    "email": "user10@github.com",
+    "title": "Chief People Officer",
+    "cost_center": "Office of the CEO",
+    "country": "United States of America"
+  },
+  "user11": {
+    "manager": "user1",
+    "employment_type": "microsoft_employee",
+    "github_login": "user11",
+    "msft_alias": "user11MSFT",
+    "name": "James Garcia",
+    "email": "user11h@github.com",
+    "title": "Chief Technology Officer",
+    "cost_center": "Office of the CEO",
+    "country": "United States of America"
+  },
+  "user12": {
+    "manager": "user3",
+    "employment_type": "microsoft_employee",
+    "github_login": "user12",
+    "msft_alias": "user12MSFT",
+    "name": "Emily White",
+    "email": "user12@github.com",
+    "title": "Chief Financial Officer",
+    "cost_center": "Office of the CEO",
+    "country": "United States of America"
+  },
+    "user13": {
+    "manager": "kk",
+    "employment_type": "microsoft_employee",
+    "github_login": "user13",
+    "msft_alias": "user13MSFT",
+    "name": "Emily White",
+    "email": "user13@github.com",
+    "title": "Chief Financial Officer",
+    "cost_center": "Office of the CEO",
+    "country": "United States of America"
+  },
+    "user131": {
+    "manager": "user13",
+    "employment_type": "microsoft_employee",
+    "github_login": "user131",
+    "msft_alias": "user131MSFT",
+    "name": "Emily White",
+    "email": "user131@github.com",
+    "title": "Chief Financial Officer",
+    "cost_center": "Office of the CEO",
+    "country": "United States of America"
+  }
+}
