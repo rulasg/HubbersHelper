@@ -25,5 +25,8 @@ function Search-Hubber {
         $hubbers = $hubbers | Where-Object { $_.name -like "*$Name*" }
     }
 
+    # Convert to PSCustomObject
+    $hubbers = $hubbers | ForEach-Object{ [pscustomobject]$_}
+
     return $hubbers
 } Export-ModuleMember -Function Search-Hubber
