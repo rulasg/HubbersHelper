@@ -18,6 +18,9 @@ function Get-HubberPath{
         $h = $h.manager
     }
 
+    # Convert to PSCustomObject
+    $ret = $ret | ForEach-Object{ [pscustomobject]$_}
+
     return $ret
 
 } Export-ModuleMember -Function Get-HubberPath
