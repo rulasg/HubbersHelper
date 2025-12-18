@@ -34,17 +34,13 @@ function Build-HubbersTreeV2 {
     $heads = @()
     $tree = @{}
 
-    # Find all the heads of the treed
-    $ceo = $hubbers.Values | Where-Object { $_.manager -eq $_.github_login }
-
-    if($null -ne $ceo){
-        $heads += $ceo
-    }
+    # Find all the heads of the tree
+    # nodes where the manager is themselves
+    $heads += $hubbers.Values | Where-Object { $_.manager -eq $_.github_login }
+    # $heads += $hubbers.Values | Where-Object { $_.manager -eq $null }
 
     $moreheads = $Hubbers.Keys | where-object {
-        # $h = $hubbersRawList.$_.github_login
         $mh = $hubbers.$_.manager
-
         $null -eq $hubbers.$mh
     }
 
