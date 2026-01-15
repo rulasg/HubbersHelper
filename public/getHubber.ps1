@@ -10,6 +10,6 @@ function Get-Hubber{
 
     $ret = $hubbers.$Handle
 
-    return $ret
+    return [PSCustomObject] $ret
 
 } Export-ModuleMember -Function Get-Hubber
