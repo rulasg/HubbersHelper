@@ -1,4 +1,4 @@
-function Get-HubberPath{
+function Get-HubberTree{
     [CmdletBinding()]
     param (
         [Parameter(ValueFromPipeline,ValueFromPipelineByPropertyName,Position=0)][string]$Handle
@@ -23,4 +23,4 @@ function Get-HubberPath{
 
     return $ret
 
-} Export-ModuleMember -Function Get-HubberPath
+} Export-ModuleMember -Function Get-HubberTree

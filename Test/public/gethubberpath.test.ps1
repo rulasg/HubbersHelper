@@ -5,7 +5,7 @@ function Test_GetHubberPath_Success{
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
     $result = Import-HubbersList -Path $filePath
 
-    $result = Get-HubberPath -Handle "user4"
+    $result = Get-HubberTree -Handle "user4"
 
     Assert-Count -Expected 3 -Presented $result
 

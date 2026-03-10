@@ -4,7 +4,7 @@ function Show-HubberTree{
         [Parameter(Mandatory)][string]$Handle
     )
 
-    $path = Get-HubberPath -Handle $Handle
+    $path = Get-HubberTree -Handle $Handle
     [array]::Reverse($path)
     
     for($i = 0; $i -lt $path.Count; $i++){
