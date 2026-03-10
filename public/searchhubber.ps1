@@ -2,7 +2,8 @@ function Search-Hubber {
     [CmdletBinding()]
     param (
         [Parameter(Position=0)][string]$Name,
-        [Parameter()][string]$Handle
+        [Parameter()][string]$Handle,
+        [Parameter()][switch]$PassThru
     )
 
     $isName = -not [string]::IsNullOrEmpty($Name)
@@ -28,5 +29,9 @@ function Search-Hubber {
     # Convert to PSCustomObject
     $hubbers = $hubbers | ForEach-Object{ [pscustomobject]$_}
 
-    return $hubbers
+    if($PassThru){
+        return $hubbers
+    } else {
+        $hubbers | sort-object totalReports,name -Descending | Format-Table -Property name, title, totalReports, github_login -AutoSize
+    }
 } Export-ModuleMember -Function Search-Hubber
