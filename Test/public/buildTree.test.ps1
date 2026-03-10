@@ -35,7 +35,7 @@ function Test_GetHubbersTree{
 
     $result = Import-HubbersList -Path $filePath
 
-    $result = Get-HubbersTree
+    $result = Get-HubbersTreeRoot
 
     Assert-AreEqual -Expected user0 -Presented $result.github_login
     Assert-AreEqual -Expected user12 -Presented $result.reports.user3.reports.user12.github_login

@@ -40,7 +40,7 @@ function Test_GetHubbersTreeV2{
 
     $result = Import-HubbersListV2 -Path $filePath
 
-    $result = Get-HubbersTree
+    $result = Get-HubbersTreeRoot
 
     Assert-Count -Expected 1 -Presented $result.Count
     Assert-AreEqual -Expected "user0" -Presented $result.Keys[0]
