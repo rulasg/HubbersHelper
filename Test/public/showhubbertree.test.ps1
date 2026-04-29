@@ -4,7 +4,7 @@ function Test_ShowHubberTree_DisplaysPathFromHandleToRoot {
     Reset-InvokeCommandMock
     Mock_Database
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
-    $result = Import-HubbersList -Path $filePath
+    $null = Import-HubbersList -Path $filePath
     $testHandle = "user1"
     
     # Act
@@ -20,7 +20,7 @@ function Test_ShowHubberTree_HandlerNotFound {
     Reset-InvokeCommandMock
     Mock_Database
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
-    $result = Import-HubbersList -Path $filePath
+    $null = Import-HubbersList -Path $filePath
     $testHandle = "nonexistent"
     $exceptionThrown = $false
     
@@ -43,7 +43,7 @@ function Test_ShowHubberTree_DisplaysTreeWithProperFormatting {
     Reset-InvokeCommandMock
     Mock_Database
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
-    $result = Import-HubbersList -Path $filePath
+    $null = Import-HubbersList -Path $filePath
     $testHandle = "user1"
     
     # Act

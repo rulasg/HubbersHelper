@@ -33,9 +33,11 @@ function Test_GetHubbersTree{
 
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
 
-    $result = Import-HubbersList -Path $filePath
+    $null = Import-HubbersList -Path $filePath
 
-    $result = Get-HubbersTreeRoot
+    $roots = Get-HubbersTreeRoot
+
+    $result = $roots.user0
 
     Assert-AreEqual -Expected user0 -Presented $result.github_login
     Assert-AreEqual -Expected user12 -Presented $result.reports.user3.reports.user12.github_login

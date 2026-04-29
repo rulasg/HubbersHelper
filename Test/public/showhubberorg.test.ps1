@@ -4,7 +4,7 @@ function Test_ShowHubberOrg_DisplaysOrgTreeFromHandle {
     Reset-InvokeCommandMock
     Mock_Database
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
-    $result = Import-HubbersList -Path $filePath
+    $null = Import-HubbersList -Path $filePath
     $testHandle = "user1"
 
     # Act
@@ -20,12 +20,12 @@ function Test_ShowHubberOrg_HandlerNotFound {
     Reset-InvokeCommandMock
     Mock_Database
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
-    $result = Import-HubbersList -Path $filePath
+    $null = Import-HubbersList -Path $filePath
     $testHandle = "nonexistent"
 
     # Act
-    Show-HubberOrg -Handle $testHandle -ErrorAction SilentlyContinue
+    Show-HubberOrg -Handle $testHandle @ErrorParameters
 
     # Assert
-    Assert-AreEqual -Expected $false -Presented $?
+    Assert-AreEqual -Expected "Hubber with handle 'nonexistent' not found" -Presented $errorVar.Exception.Message
 }
