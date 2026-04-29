@@ -1,5 +1,5 @@
 
-function Import-HubbersList {
+function Import-HubbersListV1 {
     [cmdletbinding()]
     param (
         #path to hubber list
@@ -22,7 +22,7 @@ function Import-HubbersList {
 
     return $result
 
-} Export-ModuleMember -Function Import-HubbersList
+} Export-ModuleMember -Function Import-HubbersListV1
 
 
 function Build-HubbersTree {

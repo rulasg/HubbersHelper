@@ -5,7 +5,7 @@ function Test_searchHubber_Success_Name{
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
     $result = Import-HubbersList -Path $filePath
 
-    $result = search-Hubber -Name "Mich"
+    $result = search-Hubber -Name "Mich" -PassThru
 
     $resultNames = $result.name
     Assert-Count -Expected 2 -Presented $resultNames
@@ -18,9 +18,9 @@ function Test_searchHubber_Success_Handle{
     Reset-InvokeCommandMock
     Mock_Database
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
-    $result = Import-HubbersList -Path $filePath
+    $null = Import-HubbersList -Path $filePath
 
-    $result = search-Hubber -Handle "2"
+    $result = search-Hubber -Handle "2" -PassThru
 
     $resultHandles = $result.github_login
     Assert-Count -Expected 2 -Presented $resultHandles
@@ -35,7 +35,7 @@ function Test_searchHubber_Success_Name_Handle{
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
     $result = Import-HubbersList -Path $filePath
 
-    $result = search-Hubber -Handle "2" -Name "Davis"
+    $result = search-Hubber -Handle "2" -Name "Davis" -PassThru
 
     Assert-AreEqual -Expected "user2" -Presented $result.github_login
     Assert-AreEqual -Expected "Jennifer Davis" -Presented $result.name
@@ -48,7 +48,7 @@ function Test_searchHubber_Fail_NoParams{
     Mock_Database
 
     Start-MyTranscript
-    $result = search-Hubber @ErrorParameters
+    $null = search-Hubber @ErrorParameters
     $transcriptContent = Stop-MyTranscript
 
     Assert-Contains -Expected "Error: Please specify either Name or Handle, or both." -Presented $transcriptContent

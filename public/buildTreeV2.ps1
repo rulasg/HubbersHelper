@@ -1,6 +1,7 @@
 
 function Import-HubbersListV2 {
     [cmdletbinding()]
+    [Alias("Import-HubbersList")]
     param (
         #path to hubber list
         [Parameter(Mandatory, Position = 1)][string]$Path
@@ -22,7 +23,7 @@ function Import-HubbersListV2 {
 
     return $result
 
-} Export-ModuleMember -Function Import-HubbersListV2
+} Export-ModuleMember -Function Import-HubbersListV2 -Alias Import-HubbersList
 
 
 function Build-HubbersTreeV2 {

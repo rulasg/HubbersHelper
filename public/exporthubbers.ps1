@@ -24,10 +24,10 @@ function Get-HubbersList {
     return $hubbers
 } Export-ModuleMember -Function Get-HubbersList
 
-function Get-HubbersTree {
+function Get-HubbersTreeRoot {
     param()
 
     $tree = Get-DatabaseKey -Key HubbersTree -DBFormat XML
 
     return $tree
-} Export-ModuleMember -Function Get-HubbersTree
+} Export-ModuleMember -Function Get-HubbersTreeRoot

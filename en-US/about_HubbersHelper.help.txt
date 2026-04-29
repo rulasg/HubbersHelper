@@ -18,3 +18,50 @@ KEYWORDS
 
 SEE ALSO
     https://github.com/rulasg/TestingHelper/
+
+## Build the Hubber List
+
+Download the hubber list json file and save it 
+
+- https://thehub.github.com/assets/org-data.json
+
+Run the following command to build the Hubber List:
+
+```powershell
+Import-HubbersList -Path ./hubbersList.json
+```
+
+## Find a Hubber
+
+```powershell
+Search-Hubber -Handle "rulas"
+
+Search-Hubber -Name "Raul"
+```
+
+## Show Hubber
+
+```powershell
+Show-Hubber -Handle "rulasg"
+```
+
+## Show Hubber Organization
+
+```powershell
+Show-HubberOrg -Handle "rulasg"
+```
+
+## Show Hubber connect
+
+```powershell
+Show-HubberConnect rulasg tgrall
+```
+
+## Show Hubber tree
+```powershell
+Show-HubberTree -Handle "rulasg"
+```
+
+
+
+

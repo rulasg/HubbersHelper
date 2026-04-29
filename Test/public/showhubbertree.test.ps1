@@ -4,14 +4,14 @@ function Test_ShowHubberTree_DisplaysPathFromHandleToRoot {
     Reset-InvokeCommandMock
     Mock_Database
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
-    $result = Import-HubbersList -Path $filePath
+    $null = Import-HubbersList -Path $filePath
     $testHandle = "user1"
     
     # Act
-    Show-HubberTree -Handle $testHandle
+    Show-HubberTree -Handle $testHandle @ErrorParameters
     
     # Assert - verify no error is thrown
-    Assert-AreEqual -Expected $true -Presented $?
+    Assert-Count -Expected 0 -Presented $errorVar.Count
 }
 
 function Test_ShowHubberTree_HandlerNotFound {
@@ -20,7 +20,7 @@ function Test_ShowHubberTree_HandlerNotFound {
     Reset-InvokeCommandMock
     Mock_Database
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
-    $result = Import-HubbersList -Path $filePath
+    $null = Import-HubbersList -Path $filePath
     $testHandle = "nonexistent"
     $exceptionThrown = $false
     
@@ -43,12 +43,12 @@ function Test_ShowHubberTree_DisplaysTreeWithProperFormatting {
     Reset-InvokeCommandMock
     Mock_Database
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
-    $result = Import-HubbersList -Path $filePath
+    $null = Import-HubbersList -Path $filePath
     $testHandle = "user1"
     
     # Act
-    Show-HubberTree -Handle $testHandle
+    Show-HubberTree -Handle $testHandle @ErrorParameters
     
     # Assert - verify no error is thrown
-    Assert-AreEqual -Expected $true -Presented $?
+    Assert-Count -Expected 0 -Presented $errorVar.Count
 }
