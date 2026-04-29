@@ -7,10 +7,10 @@ function Test_ShowHubbersConnect_DisplaysConnectionTree {
     $null = Import-HubbersListV2 -Path $filePath
 
     # Act
-    Show-HubberConnect -FromHandle "rulasg" -ToHandle "evgenijrenke"
+    Show-HubberConnect -FromHandle "user1" -ToHandle "user2" @ErrorParameters
 
     # Assert
-    Assert-AreEqual -Expected $true -Presented $?
+    Assert-Count -Expected 0 -Presented $errorVar.Count
 }
 
 function Test_ShowHubbersConnect_WhenHubberMissing {

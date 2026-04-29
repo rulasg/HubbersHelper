@@ -8,10 +8,10 @@ function Test_ShowHubberTree_DisplaysPathFromHandleToRoot {
     $testHandle = "user1"
     
     # Act
-    Show-HubberTree -Handle $testHandle
+    Show-HubberTree -Handle $testHandle @ErrorParameters
     
     # Assert - verify no error is thrown
-    Assert-AreEqual -Expected $true -Presented $?
+    Assert-Count -Expected 0 -Presented $errorVar.Count
 }
 
 function Test_ShowHubberTree_HandlerNotFound {
@@ -47,8 +47,8 @@ function Test_ShowHubberTree_DisplaysTreeWithProperFormatting {
     $testHandle = "user1"
     
     # Act
-    Show-HubberTree -Handle $testHandle
+    Show-HubberTree -Handle $testHandle @ErrorParameters
     
     # Assert - verify no error is thrown
-    Assert-AreEqual -Expected $true -Presented $?
+    Assert-Count -Expected 0 -Presented $errorVar.Count
 }

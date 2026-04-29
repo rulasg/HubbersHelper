@@ -8,10 +8,10 @@ function Test_ShowHubberOrg_DisplaysOrgTreeFromHandle {
     $testHandle = "user1"
 
     # Act
-    Show-HubberOrg -Handle $testHandle
+    Show-HubberOrg -Handle $testHandle @ErrorParameters
 
     # Assert
-    Assert-AreEqual -Expected $true -Presented $?
+    Assert-Count -Expected 0 -Presented $errorVar.Count
 }
 
 function Test_ShowHubberOrg_HandlerNotFound {
