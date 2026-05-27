@@ -1,5 +1,6 @@
 function Show-HubberTree{
     [CmdletBinding()]
+    [Alias("sht")]
     param(
         [Parameter(Mandatory)][string]$Handle
     )
@@ -19,7 +20,7 @@ function Show-HubberTree{
             WriteHost "$indent└─ " $hubber
         }
     }
-} Export-ModuleMember -Function Show-HubberTree
+} Export-ModuleMember -Function Show-HubberTree -Alias sht
 
 function WriteHost{
     param(

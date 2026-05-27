@@ -1,5 +1,6 @@
 function Show-Hubber {
     [CmdletBinding()]
+    [Alias("sh")]
     param(
         [Parameter(Mandatory)][string]$Handle
     )
@@ -21,7 +22,7 @@ function Show-Hubber {
     }
 
     Write-Host ""
-} Export-ModuleMember -Function Show-Hubber
+} Export-ModuleMember -Function Show-Hubber -Alias sh
 
 function Display-HubberCard {
     [CmdletBinding()]
