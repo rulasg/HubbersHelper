@@ -2,26 +2,30 @@ function Show-Hubber {
     [CmdletBinding()]
     [Alias("sh")]
     param(
-        [Parameter(Mandatory)][string]$Handle
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)][Alias("github_login")][string]$Handle
     )
 
-    $hubber = Get-Hubber -Handle $Handle
+    process{
 
-    if ($null -eq $hubber) {
-        Write-Error "Hubber with handle '$Handle' not found"
-        return
+        
+        $hubber = Get-Hubber -Handle $Handle
+        
+        if ($null -eq $hubber) {
+            Write-Error "Hubber with handle '$Handle' not found"
+            return
+        }
+        
+        Write-Host ""
+        Display-HubberCard -Hubber $hubber
+        
+        if ($null -ne $hubber.reports -and $hubber.reports.Count -gt 0) {
+            Display-DirectReports -Reports $hubber.reports
+        } else {
+            Write-Host "    └─ No direct reports"
+        }
+        
+        Write-Host ""
     }
-
-    Write-Host ""
-    Display-HubberCard -Hubber $hubber
-
-    if ($null -ne $hubber.reports -and $hubber.reports.Count -gt 0) {
-        Display-DirectReports -Reports $hubber.reports
-    } else {
-        Write-Host "    └─ No direct reports"
-    }
-
-    Write-Host ""
 } Export-ModuleMember -Function Show-Hubber -Alias sh
 
 function Display-HubberCard {
