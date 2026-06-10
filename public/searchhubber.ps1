@@ -2,28 +2,35 @@ function Search-Hubber {
     [CmdletBinding()]
     param (
         [Parameter(Position=0)][string]$Name,
+        [Parameter()][string]$Title,
         [Parameter()][string]$Handle,
         [Parameter()][switch]$PassThru
     )
 
-    $isName = -not [string]::IsNullOrEmpty($Name)
-    $isHandle = -not [string]::IsNullOrEmpty($Handle)
-    
-    if( ! $isName -and ! $isHandle ) {
-        Write-MyError -Message "Please specify either Name or Handle, or both."
-        return $null
-    }
-    
+    $isFiltered = $false
+
     $hubbersList = Get-HubbersList
 
     $hubbers = $hubbersList.Values
 
-    if ( $isHandle ) {
+    if ( -not [string]::IsNullOrEmpty($Handle) ) {
         $hubbers = $hubbers | Where-Object { $_.github_login -like "*$Handle*" }
+        $isFiltered = $true
     }
 
-    if ( $isName ) {
+    if (-not [string]::IsNullOrEmpty($Name) ) {
         $hubbers = $hubbers | Where-Object { $_.name -like "*$Name*" }
+        $isFiltered = $true
+    }
+
+    if (-not [string]::IsNullOrEmpty($Title) ) {
+        $hubbers = $hubbers | Where-Object { $_.title -like "*$Title*" }
+        $isFiltered = $true
+    }
+
+    if(-Not $isfiltered){
+        Write-Warning "Please provide at least one filter parameter."
+        return
     }
 
     # Convert to PSCustomObject
