@@ -1,20 +1,29 @@
 function Show-Hubber {
     [CmdletBinding()]
-    [Alias("sh")]
+    [Alias("shbb")]
     param(
-        [Parameter(Mandatory,ValueFromPipelineByPropertyName)][Alias("github_login")][string]$Handle
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)][Alias("github_login")][string]$Handle,
+        [Parameter()][switch]$Manager
     )
 
     process{
 
-        
         $hubber = Get-Hubber -Handle $Handle
         
         if ($null -eq $hubber) {
             Write-Error "Hubber with handle '$Handle' not found"
             return
         }
-        
+
+        if($Manager) {
+            $hubber = $hubber.manager
+
+            if($null -eq $hubber) {
+                Write-Error "Hubber does not have a manager."
+                return
+            }
+        }
+
         Write-Host ""
         Display-HubberCard -Hubber $hubber
         
