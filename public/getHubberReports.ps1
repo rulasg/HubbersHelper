@@ -1,3 +1,5 @@
+Register-ArgumentCompleter -CommandName Get-HubberReports -ParameterName Handle -ScriptBlock $Get_Argument_Handles
+
 function Get-HubberReports {
     [CmdletBinding()]
     param (

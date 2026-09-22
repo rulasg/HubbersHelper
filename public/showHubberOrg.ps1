@@ -1,31 +1,39 @@
+
+Register-ArgumentCompleter -CommandName Show-HubberOrg -ParameterName Handle -ScriptBlock $Get_Argument_Handles
+
 function Show-HubberOrg {
     [CmdletBinding()]
+    [Alias("shbbo")]
     param(
-        [Parameter(Mandatory)][string]$Handle,
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)][alias("github_login")][string]$Handle,
         [Parameter()][int]$Depth = 0
     )
 
-    $hubber = Get-Hubber -Handle $Handle
+    process{
 
-    if ($null -eq $hubber) {
-        Write-Error "Hubber with handle '$Handle' not found"
-        return
-    }
-
-    Write-HubberOrgLine -Prefix "- " -Hubber $hubber
-
-    if ($Depth -lt 0) {
-        Write-Error "Depth must be zero or greater"
-        return
-    }
-
-    if ($null -ne $hubber.reports -and $hubber.reports.Count -gt 0) {
-        if (($Depth -eq 0) -or ($Depth -gt 1)) {
-            Write-HubberOrgSpacer -Prefix "    │"
+        
+        $hubber = Get-Hubber -Handle $Handle
+        
+        if ($null -eq $hubber) {
+            Write-Error "Hubber with handle '$Handle' not found"
+            return
         }
-        Show-HubberOrgChildren -Reports $hubber.reports -Prefix "    " -DepthRemaining $Depth
+        
+        Write-HubberOrgLine -Prefix "- " -Hubber $hubber
+        
+        if ($Depth -lt 0) {
+            Write-Error "Depth must be zero or greater"
+            return
+        }
+        
+        if ($null -ne $hubber.reports -and $hubber.reports.Count -gt 0) {
+            if (($Depth -eq 0) -or ($Depth -gt 1)) {
+                Write-HubberOrgSpacer -Prefix "    │"
+            }
+            Show-HubberOrgChildren -Reports $hubber.reports -Prefix "    " -DepthRemaining $Depth
+        }
     }
-} Export-ModuleMember -Function Show-HubberOrg
+} Export-ModuleMember -Function Show-HubberOrg -Alias shbbo
 
 function Show-HubberOrgChildren {
     [CmdletBinding()]

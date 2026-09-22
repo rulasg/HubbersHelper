@@ -103,6 +103,11 @@ function Build-Node {
                 }
                 $Node.totalReports++
             }
+
+            # Display report count
+            $Node.reportsCount = "$($Node.reports.count)/$($Node.totalReports)"
+        } else {
+            $Node.reportsCount = "0/0"
         }
 
         $Node.sequenceNumber = $script:count

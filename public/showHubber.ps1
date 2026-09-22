@@ -1,3 +1,6 @@
+
+Register-ArgumentCompleter -CommandName Show-Hubber -ParameterName Handle -ScriptBlock $Get_Argument_Handles
+
 function Show-Hubber {
     [CmdletBinding()]
     [Alias("shbb")]
@@ -25,7 +28,7 @@ function Show-Hubber {
         }
 
         Write-Host ""
-        Display-HubberCard -Hubber $hubber
+        showHubberCard -Hubber $hubber
         
         if ($null -ne $hubber.reports -and $hubber.reports.Count -gt 0) {
             Display-DirectReports -Reports $hubber.reports
@@ -35,9 +38,9 @@ function Show-Hubber {
         
         Write-Host ""
     }
-} Export-ModuleMember -Function Show-Hubber -Alias sh
+} Export-ModuleMember -Function Show-Hubber -Alias shbb
 
-function Display-HubberCard {
+function showHubberCard {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)][object]$Hubber

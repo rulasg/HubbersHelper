@@ -1,3 +1,6 @@
+
+Register-ArgumentCompleter -CommandName Get-HubberTree -ParameterName Handle -ScriptBlock $Get_Argument_Handles
+
 function Get-HubberTree{
     [CmdletBinding()]
     param (

@@ -28,8 +28,22 @@ function Invoke-MyCommand{
         [Parameter(Position=1)][hashtable]$Parameters
     )
 
-    Write-Debug "[invoke] $Command" $Parameters
+    Write-MyDebug "invoke" $Command $Parameters
 
     return InvokeHelper\Invoke-MyCommand -Command $Command -Parameters $Parameters
 }
 
+
+function Reset-MyInvokeCommandAlias{
+    [CmdletBinding(SupportsShouldProcess)]
+    param()
+
+        # throw if MODULE_INVOKATION_TAG is not set or is "MyModuleModule"
+    if (-not $MODULE_INVOKATION_TAG) {
+        throw "MODULE_INVOKATION_TAG is not set. Please set it to a unique value before calling Set-MyInvokeCommandAlias."
+    }
+    InvokeHelper\Reset-InvokeCommandAlias -Tag $MODULE_INVOKATION_TAG
+}
+
+# Reset all aliases for this module on each refresh
+Reset-MyInvokeCommandAlias

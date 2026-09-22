@@ -21,6 +21,8 @@ function Get-HubbersList {
 
     $hubbers = Get-DatabaseKey -Key HubbersList -DBFormat XML
 
+    "[Get-HubbersList] Found $($hubbers.Count) hubbers in database" | Write-Mydebug -Section "Get-HubbersList"
+
     return $hubbers
 } Export-ModuleMember -Function Get-HubbersList
 

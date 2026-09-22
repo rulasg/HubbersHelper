@@ -1,5 +1,10 @@
+
+Register-ArgumentCompleter -CommandName Show-HubberConnect -ParameterName FromHandle -ScriptBlock $Get_Argument_Handles
+Register-ArgumentCompleter -CommandName Show-HubberConnect -ParameterName ToHandle -ScriptBlock $Get_Argument_Handles
+
 function Show-HubberConnect {
     [CmdletBinding()]
+    [Alias("shhc")]
     param(
         [Parameter(Mandatory, Position = 0)][string]$FromHandle,
         [Parameter(Mandatory, Position = 1)][string]$ToHandle
@@ -67,7 +72,7 @@ function Show-HubberConnect {
     }
 
     Show-HubbersConnectChildren -CurrentNode $rootHubber -PrefixSegments @() -State $state
-} Export-ModuleMember -Function Show-HubberConnect
+} Export-ModuleMember -Function Show-HubberConnect -Alias shhc
 
 function Get-TopRootHubber {
     [CmdletBinding()]
