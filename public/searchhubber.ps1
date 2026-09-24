@@ -48,7 +48,7 @@ function Search-HubberV2 {
     [CmdletBinding()]
     [Alias("Search-Hubber","sbb")]
     param (
-        [Parameter(Position=0)][string]$Name,
+        [Parameter(Mandatory,Position=0)][string]$Name,
         [Parameter()][string]$Title,
         [Parameter()][switch]$PassThru
     )
