@@ -5,7 +5,7 @@ function Test_searchHubber_Success_Name{
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
     $result = Import-HubbersList -Path $filePath
 
-    $result = search-Hubber -Name "Mich" -PassThru
+    $result = Search-Hubber -Name "Mich" -PassThru
 
     $resultNames = $result.name
     Assert-Count -Expected 2 -Presented $resultNames
@@ -20,7 +20,7 @@ function Test_searchHubber_Success_Handle{
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
     $null = Import-HubbersList -Path $filePath
 
-    $result = search-Hubber -Handle "2" -PassThru
+    $result = Search-Hubber -Name "2" -PassThru
 
     $resultHandles = $result.github_login
     Assert-Count -Expected 2 -Presented $resultHandles
@@ -29,18 +29,29 @@ function Test_searchHubber_Success_Handle{
 
 }
 
-function Test_searchHubber_Success_Name_Handle{
+function Test_searchHubber_Success_Name_Title{
     Reset-InvokeCommandMock
     Mock_Database
     $filePath = Get-MockFileFullPath -fileName "hubbers.json"
     $result = Import-HubbersList -Path $filePath
 
-    $result = search-Hubber -Handle "2" -Name "Davis" -PassThru
+    $result = Search-Hubber -Title 'Chief' -Name "Davis" -PassThru
 
     Assert-AreEqual -Expected "user2" -Presented $result.github_login
     Assert-AreEqual -Expected "Jennifer Davis" -Presented $result.name
 }
 
+function Test_searchHubber_Success_Handle_Title{
+    Reset-InvokeCommandMock
+    Mock_Database
+    $filePath = Get-MockFileFullPath -fileName "hubbers.json"
+    $result = Import-HubbersList -Path $filePath
+
+    $result = Search-Hubber -Name '2' -Title "Revenue" -PassThru
+
+    Assert-AreEqual -Expected "user2" -Presented $result.github_login
+    Assert-AreEqual -Expected "Chief Revenue Officer" -Presented $result.Title
+}
 
 
 function Test_searchHubber_Fail_NoParams{
@@ -48,7 +59,7 @@ function Test_searchHubber_Fail_NoParams{
     Mock_Database
 
     Start-MyTranscript
-    $null = search-Hubber @ErrorParameters
+    $null = Search-Hubber @ErrorParameters
     $transcriptContent = Stop-MyTranscript
 
     Assert-Contains -Expected "Error: Please specify either Name or Handle, or both." -Presented $transcriptContent

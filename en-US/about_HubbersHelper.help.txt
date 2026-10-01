@@ -34,7 +34,7 @@ Import-HubbersList -Path ./hubbersList.json
 ## Find a Hubber
 
 ```powershell
-Search-Hubber -Handle "rulas"
+Search-Hubber -Name "rulas"
 
 Search-Hubber -Name "Raul"
 ```

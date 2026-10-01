@@ -22,8 +22,9 @@ function Test_ShowHubbersConnect_WhenHubberMissing {
     $null = Import-HubbersListV2 -Path $filePath
 
     # Act
-    Show-HubberConnect -FromHandle "missing-hubber" -ToHandle "rulasg" @ErrorParameters
+    Show-HubberConnect -FromHandle "missing-hubber" -ToHandle "rulasg"
 
     # Assert
-    Assert-AreEqual -Expected "Hubber with handle 'missing-hubber' not found" -Presented $errorVar.Exception.Message
+    $result = Get-HubbersHelperLastError
+    Assert-AreEqual -Expected "Hubber with handle 'missing-hubber' not found" -Presented $result
 }

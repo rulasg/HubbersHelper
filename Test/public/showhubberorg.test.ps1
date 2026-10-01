@@ -27,5 +27,6 @@ function Test_ShowHubberOrg_HandlerNotFound {
     Show-HubberOrg -Handle $testHandle @ErrorParameters
 
     # Assert
-    Assert-AreEqual -Expected "Hubber with handle 'nonexistent' not found" -Presented $errorVar.Exception.Message
+    $result = Get-HubbersHelperLastError
+    Assert-AreEqual -Expected "Hubber with handle 'nonexistent' not found" -Presented $result
 }
