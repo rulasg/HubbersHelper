@@ -48,10 +48,16 @@ function Search-HubberV2 {
     [CmdletBinding()]
     [Alias("Search-Hubber","sbb")]
     param (
-        [Parameter(Mandatory,Position=0)][string]$Name,
+        [Parameter(Position=0)][string]$Name,
         [Parameter()][string]$Title,
         [Parameter()][switch]$PassThru
     )
+
+    #Check that Name or Title is provided
+    if ([string]::IsNullOrEmpty($Name) -and [string]::IsNullOrEmpty($Title)) {
+        "Please specify either Name or Handle, or both." | Write-MyError
+        return
+    }
 
     $hubbersList = Get-HubbersList
 
