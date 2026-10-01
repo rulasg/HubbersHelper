@@ -1,0 +1,4 @@
+{
+  "FileName": "hubbersV2.yml",
+  "Command": "RepoHelper\\Get-RepoFile -Owner github -Repo thehub -Path \"docs/_data/hubbers.yml\""
+}
