@@ -9,10 +9,13 @@ function Get-Hubber{
         [Parameter()][switch]$AsHashtable
     )
 
-    $hubbers = Get-HubbersList
+    process{
 
-    $ret = $hubbers.$Handle
-
-    return [PSCustomObject] $ret
+        $hubbers = Get-HubbersList
+        
+        $ret = $hubbers.$Handle
+        
+        return [PSCustomObject] $ret
+    }
 
 } Export-ModuleMember -Function Get-Hubber -alias gbb
