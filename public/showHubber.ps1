@@ -6,32 +6,23 @@ function Show-Hubber {
     [Alias("shbb")]
     param(
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)][Alias("github_login")][string]$Handle,
-        [Parameter()][switch]$Manager
+        [Parameter()][switch]$Manager,
+        [Parameter()][switch]$PassThru
     )
 
     process{
 
-        $hubber = Get-Hubber -Handle $Handle
-        
-        if ($null -eq $hubber) {
-            Write-Error "Hubber with handle '$Handle' not found"
-            return
-        }
+        $hubber = Resolve-Hubber -Handle $Handle -Manager:$Manager
 
-        if($Manager) {
-            $hubber = $hubber.manager
-
-            if($null -eq $hubber) {
-                Write-Error "Hubber does not have a manager."
-                return
-            }
+        if ($PassThru) {
+            return [PSCustomObject]$hubber
         }
 
         Write-Host ""
         showHubberCard -Hubber $hubber
         
         if ($null -ne $hubber.reports -and $hubber.reports.Count -gt 0) {
-            Display-DirectReports -Reports $hubber.reports
+            displayDirectReports -Reports $hubber.reports
         } else {
             Write-Host "    └─ No direct reports"
         }
@@ -125,7 +116,7 @@ function showHubberCard {
     Write-Host ("└" + ("─" * $innerWidth) + "┘") -ForegroundColor Green
 }
 
-function Display-DirectReports {
+function displayDirectReports {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)][hashtable]$Reports
