@@ -51,8 +51,8 @@ function Search-HubberV2 {
         [Parameter(Position=0)][string]$Name,
         [Parameter()][string]$Title,
         [Parameter()][switch]$PassThru,
-        [Parameter()][switch]$Manager
-
+        [Parameter()][switch]$Manager,
+        [Parameter()][switch]$SetClipboardWithHandle
     )
 
     #Check that Name or Title is provided
@@ -91,6 +91,12 @@ function Search-HubberV2 {
 
     if($Manager){
         $ret = $ret.manager
+    }
+
+    if($SetClipboardWithHandle){
+        $ret = $ret.github_login
+        Set-Clipboard -Value $ret
+        return
     }
 
     # Convert to PSCustomObject
