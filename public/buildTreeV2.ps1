@@ -40,6 +40,7 @@ function Build-HubbersTreeV2 {
     $heads += $hubbers.Values | Where-Object { $_.manager -eq $_.github_login }
     # $heads += $hubbers.Values | Where-Object { $_.manager -eq $null }
 
+    # Heads that manager is empty
     $moreheads = $Hubbers.Keys | where-object {
         $mh = $hubbers.$_.manager
         $null -eq $hubbers.$mh
