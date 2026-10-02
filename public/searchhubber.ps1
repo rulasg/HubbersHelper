@@ -50,7 +50,9 @@ function Search-HubberV2 {
     param (
         [Parameter(Position=0)][string]$Name,
         [Parameter()][string]$Title,
-        [Parameter()][switch]$PassThru
+        [Parameter()][switch]$PassThru,
+        [Parameter()][switch]$Manager
+
     )
 
     #Check that Name or Title is provided
@@ -87,6 +89,10 @@ function Search-HubberV2 {
         return
     }
 
+    if($Manager){
+        $ret = $ret.manager
+    }
+
     # Convert to PSCustomObject
     $ret = $ret | ForEach-Object{ [pscustomobject]$_}
 
@@ -96,12 +102,7 @@ function Search-HubberV2 {
     } else {
         # $ret | sort-object totalReports,name -Descending | Format-Table -Property name, title, totalReports, github_login -AutoSize
         foreach ($item in $ret) {
-            [pscustomobject]@{
-                name = $item.name
-                title = $item.title
-                totalReports = $item.totalReports
-                handle = $item.github_login
-            }
+            getHubberRef -Hubber $item
         }
     }
 } Export-ModuleMember -Function Search-HubberV2 -alias "sbb","Search-Hubber"
